@@ -1,0 +1,12 @@
+INside Header 
+About us tooltip : 
+A Resume Builder App is an essential tool for job seekers looking to create polished and effective resumes. By combining ease of use with professional design options, these apps empower users to present their qualifications confidently and increase their chances of landing job interviews.
+Landing page images
+1. https://www.cpasitesolutions.com/cpa-websites/wp-content/uploads/2024/06/local-seo-for-bookeepers-1.png
+2. https://www.icu.ac.jp/en/assets/img/academics/ph_gs_ma_01.jpg
+3. tOOLS IMAGE : https://cdn-images.zety.com/images/zety/landings/builder/resume-builder-jumbotron-image@3x.png
+4. tESTIMONY
+https://assets.livecareer.co.uk/blobimages/lcintl-lp/luk/images/grid/grid1.png
+https://assets.livecareer.co.uk/blobimages/lcintl-lp/luk/images/grid/grid7.png
+https://assets.livecareer.co.uk/blobimages/lcintl-lp/luk/images/grid/grid2.png
+https://assets.livecareer.co.uk/blobimages/lcintl-lp/luk/images/grid/grid3.png
