@@ -11,7 +11,7 @@ import Edit from './Edit';
 
 function Preview() {
   return (
-    <div >
+    <>
       <Stack direction={'row'} sx={{justifyContent:'flex-end'}} >
         <Stack direction={'row'} sx={{alignItems:'center'}}>
           {/* download */}
@@ -24,7 +24,7 @@ function Preview() {
            <Link to={'/resume'} className="btn text-primary">BACK</Link>
         </Stack>
       </Stack>
-        <Box component="section" >
+      <Box component="section" >
             <Paper elevation={3} sx={{ my:5, p: 5, textAlign:'center' }}>
                 <h2>Name</h2>
                 <h5>Job Title</h5>
@@ -47,8 +47,8 @@ function Preview() {
                   <Button variant="contained" >user skill</Button>
                 </Stack>
             </Paper>
-        </Box>
-    </div>
+      </Box>
+    </>
   )
 }
 

@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 const LandingPage = () => {
   return (
     <div>
-      <section className="container-fluid fisrt" style={{width:'100%',height:'450px',backgroundImage:"url('https://www.cpasitesolutions.com/cpa-websites/wp-content/uploads/2024/06/local-seo-for-bookeepers-1.png')",backgroundAttachment:'fixed',backgroundPosition:'top',backgroundSize:'cover'}}  >
+      <section className="container-fluid row align-items-center" style={{width:'100%',height:'100vh',backgroundImage:"url('https://www.cpasitesolutions.com/cpa-websites/wp-content/uploads/2024/06/local-seo-for-bookeepers-1.png')",backgroundAttachment:'fixed',backgroundPosition:'top',backgroundSize:'cover'}}  >
       
-        <div className="row pt-5">
+        <div className="row  align-items-center">
           <div className="col-12 col-md-4"></div>
           <div className="col-12 col-md-4 shadow border py-5 rounded mt-5 text-center" style={{backgroundColor:"rgb(255,255,255,0.5)"}}>
             <h3>Designed to get hired.</h3>
