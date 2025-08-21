@@ -91,5 +91,8 @@
         - Set up path for component using react-router-dom
             1. Entire react app must be render inside the 'BrowserRouter' of react-router-dom Library. 
             2. Place all component neds to be set up path inside Routes component, inside Routes use Route component to set up path for component using its 'path' and 'element' attributes
+    17. Data Shairing Technques in React
+        - State Lifting : To share data from one component to another by lifting the data to their common parent and parent can share the lifted state/data using props with its children
+        
 
 

@@ -9,45 +9,54 @@ import { FaFileDownload } from "react-icons/fa";
 import { FaHistory } from "react-icons/fa";
 import Edit from './Edit';
 
-function Preview() {
+function Preview({userInput}) {
+  // console.log(userInput);
+  
   return (
     <>
-      <Stack direction={'row'} sx={{justifyContent:'flex-end'}} >
-        <Stack direction={'row'} sx={{alignItems:'center'}}>
-          {/* download */}
-          <button className="btn fs-3 text-primary" ><FaFileDownload /></button>
-          {/* edit */}
-          <div>  <Edit/> </div>
-          {/* history */}
-           <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
-           {/* back */}
-           <Link to={'/resume'} className="btn text-primary">BACK</Link>
-        </Stack>
-      </Stack>
-      <Box component="section" >
-            <Paper elevation={3} sx={{ my:5, p: 5, textAlign:'center' }}>
-                <h2>Name</h2>
-                <h5>Job Title</h5>
-                <p><span>location</span> | <span>Email</span> | <span>phone</span></p>
-                <p>
-                    <Link href={""}> GITHUB </Link> | 
-                    <Link href={""}> LINKEDIN </Link> |
-                    <Link href={""}> PORTFOLIO </Link>
-                </p>
-                <Divider sx={{fontSize:'25px'}}>Summary</Divider>
-                <p className='fs-5 text-start'>user summary </p>
-                <Divider sx={{fontSize:'25px',marginBottom:'10px'}}>Education</Divider>
-                <h5>User Education</h5>
-                <p><span>College</span> | <span>University</span> | <span>Year</span></p>
-                <Divider sx={{fontSize:'25px',marginBottom:'10px'}}>Professional Experience</Divider>
-                <h5>User Job</h5>
-                <p><span>Company</span> | <span>Location</span> | <span>Duration</span></p>
-                <Divider sx={{fontSize:'25px',marginBottom:'10px'}}>Skills</Divider>
-                <Stack  justifyContent={'space-evenly'} direction="row" sx={{flexWrap:'wrap',gap:'10px'}}>
-                  <Button variant="contained" >user skill</Button>
-                </Stack>
-            </Paper>
-      </Box>
+      {
+        userInput.personelData.name!="" &&
+        <>
+          <Stack direction={'row'} sx={{justifyContent:'flex-end'}} >
+          <Stack direction={'row'} sx={{alignItems:'center'}}>
+            {/* download */}
+            <button className="btn fs-3 text-primary" ><FaFileDownload /></button>
+            {/* edit */}
+            <div>  <Edit/> </div>
+            {/* history */}
+             <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
+             {/* back */}
+             <Link to={'/resume'} className="btn text-primary">BACK</Link>
+          </Stack>
+          </Stack>
+          <Box component="section" >
+                <Paper elevation={3} sx={{ my:5, p: 5, textAlign:'center' }}>
+                    <h2>{userInput.personelData.name}</h2>
+                    <h5>{userInput.personelData.jobTitle}</h5>
+                    <p><span>{userInput.personelData.location}</span> | <span>{userInput.personelData.email}</span> | <span>{userInput.personelData.phone}</span></p>
+                    <p>
+                        <Link href={userInput.personelData.github}> GITHUB </Link> | 
+                        <Link href={userInput.personelData.linkedin}> LINKEDIN </Link> |
+                        <Link href={userInput.personelData.portfolio}> PORTFOLIO </Link>
+                    </p>
+                    <Divider sx={{fontSize:'25px'}}>Summary</Divider>
+                    <p className=' text-start'>{userInput.summary} </p>
+                    <Divider sx={{fontSize:'25px',marginBottom:'10px'}}>Education</Divider>
+                    <h5>{userInput.education.course}</h5>
+                    <p><span>{userInput.education.college}</span> | <span>{userInput.education.university}</span> | <span>{userInput.education.year}</span></p>
+                    <Divider sx={{fontSize:'25px',marginBottom:'10px'}}>Professional Experience</Divider>
+                    <h5>{userInput.experience.jobRole}</h5>
+                    <p><span>{userInput.experience.company}</span> | <span>{userInput.experience.jobLocation}</span> | <span>{userInput.experience.duration}</span></p>
+                    <Divider sx={{fontSize:'25px',marginBottom:'10px'}}>Skills</Divider>
+                    <Stack  justifyContent={'space-evenly'} direction="row" sx={{flexWrap:'wrap',gap:'10px'}}>
+                     { userInput.skills?.map(skill=>(
+                          <Button variant="contained" >{skill}</Button>
+                     )) }
+                    </Stack>
+                </Paper>
+          </Box>
+        </>
+      }
     </>
   )
 }
