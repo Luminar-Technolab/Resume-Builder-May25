@@ -16,18 +16,18 @@ function Preview({userInput}) {
     <>
       {
         userInput.personelData.name!="" &&
-        <>
-          <Stack direction={'row'} sx={{justifyContent:'flex-end'}} >
-          <Stack direction={'row'} sx={{alignItems:'center'}}>
-            {/* download */}
-            <button className="btn fs-3 text-primary" ><FaFileDownload /></button>
-            {/* edit */}
-            <div>  <Edit/> </div>
-            {/* history */}
-             <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
-             {/* back */}
-             <Link to={'/resume'} className="btn text-primary">BACK</Link>
-          </Stack>
+        <div className='flex flex-column '>
+          <Stack direction={'row'} sx={{justifyContent:'flex-end'}} style={{marginTop:'100px'}}>
+            <Stack direction={'row'} sx={{alignItems:'center'}}>
+              {/* download */}
+              <button className="btn fs-3 text-primary" ><FaFileDownload /></button>
+              {/* edit */}
+              <div>  <Edit/> </div>
+              {/* history */}
+              <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
+              {/* back */}
+              <Link to={'/resume'} className="btn text-primary">BACK</Link>
+            </Stack>
           </Stack>
           <Box component="section" >
                 <Paper elevation={3} sx={{ my:5, p: 5, textAlign:'center' }}>
@@ -55,7 +55,7 @@ function Preview({userInput}) {
                     </Stack>
                 </Paper>
           </Box>
-        </>
+        </div>
       }
     </>
   )
