@@ -7,5 +7,8 @@ export const addResumeAPI = (resume)=>{
 }
 //editResumeAPI - PUT
 //addHistoryAPI - POST
+export const addDownloadHistoryAPI = (resume)=>{
+  return  commonAPI("POST",`${BASEURL}/history`,resume)
+}
 //getHistoryAPI - GET
 //deleteHistoryAPI - DELETE

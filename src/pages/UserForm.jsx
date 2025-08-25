@@ -48,7 +48,7 @@ function UserForm() {
             <Steps userInput={userInput} setUserInput={setUserInput} setFinish={setFinish} />
           </div>
           <div className="col-lg-6 ">
-            <Preview userInput={userInput} finish={finish} />
+            <Preview userInput={userInput}  />
           </div>
         </div>
       </div>

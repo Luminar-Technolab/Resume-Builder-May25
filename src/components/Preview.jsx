@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
@@ -8,29 +8,54 @@ import Button from '@mui/material/Button';
 import { FaFileDownload } from "react-icons/fa";
 import { FaHistory } from "react-icons/fa";
 import Edit from './Edit';
+import html2canvas from 'html2canvas';
+import { jsPDF } from "jspdf";
 
 function Preview({userInput}) {
-  // console.log(userInput);
   
+  const [downloadStatus,setDpwnloadStatus] =useState(false)
+
+  const downloadCV = async()=>{
+    //get element for taking screenshot
+    // alert("download started")
+    const input = document.getElementById("result")
+    const canvas = await html2canvas(input,{scale:2})
+    const imgURL = canvas.toDataURL('image/png')
+    // console.log(imgURL);
+    const pdf = new jsPDF()
+    const pdfWidth = pdf.internal.pageSize.getWidth()
+    const pdfHeight = pdf.internal.pageSize.getHeight()
+
+    pdf.addImage(imgURL,'PNG',0,0,pdfWidth,pdfHeight)
+    pdf.save('resume.pdf')
+
+    //get date 
+    const localTimeData = new Date()
+    const timeStamp = `${localTimeData.toLocaleDateString()}, ${localTimeData.toLocaleTimeString()}`
+    // console.log(timeStamp);
+    
+    //add download cv to json  using api call
+  }
+
   return (
     <>
       {
         userInput.personelData.name!="" &&
-        <div className='flex flex-column '>
-          <Stack direction={'row'} sx={{justifyContent:'flex-end'}} style={{marginTop:'100px'}}>
-            <Stack direction={'row'} sx={{alignItems:'center'}}>
-              {/* download */}
-              <button className="btn fs-3 text-primary" ><FaFileDownload /></button>
-              {/* edit */}
-              <div>  <Edit/> </div>
-              {/* history */}
-              <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
-              {/* back */}
-              <Link to={'/resume'} className="btn text-primary">BACK</Link>
+        <div className='flex flex-column my-5' >
+           <Stack direction={'row'} sx={{justifyContent:'flex-end'}} style={{marginTop:'100px',justifyContent:'end'}}>
+              <Stack direction={'row'} sx={{alignItems:'center'}}>
+                {/* download */}
+                <button onClick={downloadCV} className="btn fs-3 text-primary" ><FaFileDownload /></button>
+                {/* edit */}
+                <div>  <Edit/> </div>
+                {/* history */}
+                <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
+                {/* back */}
+                <Link to={'/resume'} className="btn text-primary">BACK</Link>
+              </Stack>
             </Stack>
-          </Stack>
           <Box component="section" >
-                <Paper elevation={3} sx={{ my:5, p: 5, textAlign:'center' }}>
+                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'600px',height:'700px' }}>
                     <h2>{userInput.personelData.name}</h2>
                     <h5>{userInput.personelData.jobTitle}</h5>
                     <p><span>{userInput.personelData.location}</span> | <span>{userInput.personelData.email}</span> | <span>{userInput.personelData.phone}</span></p>
