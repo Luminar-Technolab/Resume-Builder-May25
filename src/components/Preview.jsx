@@ -10,10 +10,11 @@ import { FaHistory } from "react-icons/fa";
 import Edit from './Edit';
 import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
+import { addDownloadHistoryAPI } from '../services/allAPI';
 
-function Preview({userInput}) {
+function Preview({userInput,finish}) {
   
-  const [downloadStatus,setDpwnloadStatus] =useState(false)
+  const [downloadStatus,setDownloadStatus] =useState(false)
 
   const downloadCV = async()=>{
     //get element for taking screenshot
@@ -25,7 +26,6 @@ function Preview({userInput}) {
     const pdf = new jsPDF()
     const pdfWidth = pdf.internal.pageSize.getWidth()
     const pdfHeight = pdf.internal.pageSize.getHeight()
-
     pdf.addImage(imgURL,'PNG',0,0,pdfWidth,pdfHeight)
     pdf.save('resume.pdf')
 
@@ -35,27 +35,41 @@ function Preview({userInput}) {
     // console.log(timeStamp);
     
     //add download cv to json  using api call
+    try{
+      const result = await addDownloadHistoryAPI({...userInput,imgURL,timeStamp})
+      console.log(result);
+      setDownloadStatus(true)
+    }catch(err){
+      console.log(err);      
+    }
   }
 
   return (
     <>
       {
         userInput.personelData.name!="" &&
-        <div className='flex flex-column my-5' >
-           <Stack direction={'row'} sx={{justifyContent:'flex-end'}} style={{marginTop:'100px',justifyContent:'end'}}>
-              <Stack direction={'row'} sx={{alignItems:'center'}}>
-                {/* download */}
-                <button onClick={downloadCV} className="btn fs-3 text-primary" ><FaFileDownload /></button>
-                {/* edit */}
-                <div>  <Edit/> </div>
-                {/* history */}
-                <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
-                {/* back */}
-                <Link to={'/resume'} className="btn text-primary">BACK</Link>
-              </Stack>
-            </Stack>
+        <div className='flex flex-column'>
+          {
+            finish &&
+
+             <div className='d-flex justify-content-center align-items-center mt-5' style={{paddingTop:'200px'}}>
+                  {/* download */}
+                  <button onClick={downloadCV} className="btn fs-3 text-primary" ><FaFileDownload /></button>
+                  {
+                    downloadStatus &&
+                    <>
+                      {/* edit */}
+                      <div>  <Edit/> </div>
+                      {/* history */}
+                      <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
+                    </>
+                  }
+                  {/* back */}
+                  <Link to={'/resume'} className="btn text-primary">BACK</Link>
+                </div>
+          }
           <Box component="section" >
-                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'600px',height:'700px' }}>
+                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'600px',height:'700px'}}>
                     <h2>{userInput.personelData.name}</h2>
                     <h5>{userInput.personelData.jobTitle}</h5>
                     <p><span>{userInput.personelData.location}</span> | <span>{userInput.personelData.email}</span> | <span>{userInput.personelData.phone}</span></p>
