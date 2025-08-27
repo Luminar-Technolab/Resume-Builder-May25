@@ -12,7 +12,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 import { addDownloadHistoryAPI } from '../services/allAPI';
 
-function Preview({userInput,finish}) {
+function Preview({userInput,finish,resumeId}) {
   
   const [downloadStatus,setDownloadStatus] =useState(false)
 
@@ -55,11 +55,12 @@ function Preview({userInput,finish}) {
              <div className='d-flex justify-content-center align-items-center mt-5' style={{paddingTop:'200px'}}>
                   {/* download */}
                   <button onClick={downloadCV} className="btn fs-3 text-primary" ><FaFileDownload /></button>
+                  {/* edit */}
+                  <div>  <Edit resumeId={resumeId}/> </div>
                   {
                     downloadStatus &&
                     <>
-                      {/* edit */}
-                      <div>  <Edit/> </div>
+                      
                       {/* history */}
                       <Link to={'/history'} className="btn fs-3 text-primary" ><FaHistory /></Link>
                     </>
@@ -69,7 +70,7 @@ function Preview({userInput,finish}) {
                 </div>
           }
           <Box component="section" >
-                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'600px',height:'700px'}}>
+                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'600px',height:'700px',marginTop:finish?'10px':'100px'}}>
                     <h2>{userInput.personelData.name}</h2>
                     <h5>{userInput.personelData.jobTitle}</h5>
                     <p><span>{userInput.personelData.location}</span> | <span>{userInput.personelData.email}</span> | <span>{userInput.personelData.phone}</span></p>

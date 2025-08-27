@@ -12,7 +12,7 @@ import swal from 'sweetalert';
 const steps = ['Basic Informations', 'Contact Details', 'Education details','Work Experience','Skills & Certifications','Review & Submit'];
 
 
-function Steps({userInput,setUserInput,setFinish}) {
+function Steps({userInput,setUserInput,setFinish,setResumeId}) {
   const skillSuggestionArray = ['NODE JS','EXPRESS','MONGODB','REACT','ANGULAR','NEXT JS','BOOTSTRAP','TAILWIND CSS','GIT']
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -157,7 +157,7 @@ function Steps({userInput,setUserInput,setFinish}) {
         <div>
           <h3>Professional Summary</h3>
           <div className="d-flex row p-3">
-            <TextField id="standard-basic-summary" label="Write a short summary of yourself" multiline rows={4} defaultValue={'Versatile and results-driven Full Stack Web Developer with 5+ years of experience designing, developing, and deploying scalable web applications. Proficient in both front-end and back-end technologies, including React, Angular, Node.js, Express, and MongoDB. Adept at creating responsive user interfaces, RESTful APIs, and integrating third-party services. Strong understanding of software development life cycle, agile methodologies, and version control (Git). Passionate about building high-performance, user-centric solutions that solve real-world problems.'} variant="standard" onChange={e=>setUserInput({...userInput,summary:e.target.value})} value={userInput.summary}/>
+            <TextField id="standard-basic-summary" label="Write a short summary of yourself" multiline rows={4} defaultValue={'Versatile and results-driven Full Stack Web Developer with 5+ years of experience designing, developing, and deploying scalable web applications. Proficient in both front-end and back-end technologies, including React, Angular, Node.js, Express, and MongoDB. Adept at creating responsive user interfaces, RESTful APIs, and integrating third-party services. Strong understanding of software development life cycle, agile methodologies, and version control (Git). Passionate about building high-performance, user-centric solutions that solve real-world problems.'} variant="standard" onChange={e=>setUserInput({...userInput,summary:e.target.value})} />
           </div>
         </div>
       )
@@ -171,7 +171,8 @@ function Steps({userInput,setUserInput,setFinish}) {
     if(name && jobTitle && location){
       try{
       const result = await addResumeAPI(userInput)
-      console.log(result);
+      setResumeId(result?.data?.id)
+      // console.log(result?.data?.id);
       swal("Success!", "Resume added successfully!", "success");
       setFinish(true)
       }catch(err){

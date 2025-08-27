@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { MdEditDocument } from "react-icons/md";
 import { TextField } from '@mui/material';
+import { getAResumeAPI } from '../services/allAPI';
 
 const style = {
   position: 'absolute',
@@ -21,8 +22,25 @@ const style = {
 };
 
 
-function Edit() {
+function Edit({resumeId}) {
+    const [userInput,setUserInput] = React.useState({})
     const [open, setOpen] = React.useState(false);
+    // console.log(resumeId);
+    console.log(userInput);
+    
+    React.useEffect(()=>{
+     resumeId && getEditResumeDetails()
+    },[resumeId])
+    
+    const getEditResumeDetails =  async () => {
+      try{
+        const result = await getAResumeAPI(resumeId)
+        setUserInput(result?.data)
+      }catch(err){
+        console.log(err);        
+      }
+    }
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -43,18 +61,18 @@ function Edit() {
             {/* personnel details */}
             <h3>Personal Details</h3>
             <div className="d-flex row p-3">
-            <TextField id="standard-basic-name" label="Full Name" variant="standard" />
-            <TextField id="standard-basic-job" label="Job Title" variant="standard" />
-            <TextField id="standard-basic-location" label="Location" variant="standard" />
+              <TextField id="standard-basic-name" label="Full Name" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,name:e.target.value}})} value={userInput?.personelData?.name}/>
+              <TextField id="standard-basic-job" label="Job Title" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,jobTitle:e.target.value}})} value={userInput?.personelData?.jobTitle}/>
+              <TextField id="standard-basic-location" label="Location" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,location:e.target.value}})} value={userInput?.personelData?.location}/>
             </div>
             {/* contact details */}
             <h3>Contact Details</h3>
             <div className="d-flex row p-3">
-            <TextField id="standard-basic-mail" label="Email" variant="standard" />
-            <TextField id="standard-basic-phone" label="Phone Number" variant="standard" />
-            <TextField id="standard-basic-github" label="Github Profile Link" variant="standard" />
-            <TextField id="standard-basic-linkedin" label="Linkedin Profile Link" variant="standard" />
-            <TextField id="standard-basic-portfolio" label="Portfolio Link" variant="standard" />
+              <TextField id="standard-basic-mail" label="Email" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,email:e.target.value}})} value={userInput?.personelData?.email}/>
+              <TextField id="standard-basic-phone" label="Phone Number" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,phone:e.target.value}})} value={userInput?.personelData?.phone}/>
+              <TextField id="standard-basic-github" label="Github Profile Link" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,github:e.target.value}})} value={userInput?.personelData?.github}/>
+              <TextField id="standard-basic-linkedin" label="Linkedin Profile Link" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,linkedin:e.target.value}})} value={userInput?.personelData?.linkedin}/>
+              <TextField id="standard-basic-portfolio" label="Portfolio Link" variant="standard" onChange={e=>setUserInput({...userInput,personelData:{...userInput.personelData,portfolio:e.target.value}})} value={userInput?.personelData?.portfolio}/>
             </div>
             {/* education details */}
             <h3>Education Details</h3>
