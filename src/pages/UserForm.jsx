@@ -41,7 +41,7 @@ function UserForm() {
     {
       finish?
       <div style={{height:'100vh'}} className="d-flex justify-content-center align-items-center">
-         <Preview resumeId={resumeId} userInput={userInput} finish={finish} />
+         <Preview setUserInput={setUserInput} resumeId={resumeId} userInput={userInput} finish={finish} />
       </div>
       :
       <div className="container">

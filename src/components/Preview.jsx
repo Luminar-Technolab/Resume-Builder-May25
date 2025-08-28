@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
@@ -12,10 +12,15 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 import { addDownloadHistoryAPI } from '../services/allAPI';
 
-function Preview({userInput,finish,resumeId}) {
+function Preview({userInput,setUserInput,finish,resumeId}) {
   
+  const [updateResume,setUpdateResume] = useState({})
   const [downloadStatus,setDownloadStatus] =useState(false)
 
+  useEffect(()=>{
+    updateResume!={} && setUserInput(updateResume)
+  },[updateResume])
+  
   const downloadCV = async()=>{
     //get element for taking screenshot
     // alert("download started")
@@ -56,7 +61,7 @@ function Preview({userInput,finish,resumeId}) {
                   {/* download */}
                   <button onClick={downloadCV} className="btn fs-3 text-primary" ><FaFileDownload /></button>
                   {/* edit */}
-                  <div>  <Edit resumeId={resumeId}/> </div>
+                  <div>  <Edit setUpdateResume={setUpdateResume} resumeId={resumeId}/> </div>
                   {
                     downloadStatus &&
                     <>
@@ -70,7 +75,7 @@ function Preview({userInput,finish,resumeId}) {
                 </div>
           }
           <Box component="section" >
-                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'600px',height:'700px',marginTop:finish?'10px':'100px'}}>
+                <Paper id="result" elevation={3} sx={{ my:5, p: 5, textAlign:'center',width:'100%',height:'fit-content',marginTop:finish?'10px':'100px',marginBottom:'100px'}}>
                     <h2>{userInput.personelData.name}</h2>
                     <h5>{userInput.personelData.jobTitle}</h5>
                     <p><span>{userInput.personelData.location}</span> | <span>{userInput.personelData.email}</span> | <span>{userInput.personelData.phone}</span></p>

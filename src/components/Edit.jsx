@@ -5,7 +5,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { MdEditDocument } from "react-icons/md";
 import { TextField } from '@mui/material';
-import { getAResumeAPI } from '../services/allAPI';
+import { editResumeAPI, getAResumeAPI } from '../services/allAPI';
+import swal from 'sweetalert';
 
 const style = {
   position: 'absolute',
@@ -22,7 +23,9 @@ const style = {
 };
 
 
-function Edit({resumeId}) {
+function Edit({resumeId,setUpdateResume}) {
+
+    const [userSkill,setUserSkill] = React.useState("")
     const [userInput,setUserInput] = React.useState({})
     const [open, setOpen] = React.useState(false);
     // console.log(resumeId);
@@ -43,6 +46,34 @@ function Edit({resumeId}) {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const addSkill = ()=>{
+      if(userSkill){
+        if(userInput.skills.includes(userSkill)){
+          alert("Given Skill is already existing!!! Add another...")
+        }else{
+          // userInput.skills.push(inputSkill)
+          setUserInput({...userInput,skills:[...userInput.skills,userSkill]})
+        }
+        //to clear add skill textbox
+        setUserSkill('')
+      }
+    }
+
+    const removeSkill = (skill)=>{
+    setUserInput({...userInput,skills:userInput.skills.filter(item=>item!=skill)})
+    }
+
+    const handleResumeUpdate = async ()=>{
+      try{
+        const result = await editResumeAPI(userInput?.id,userInput)
+        setUpdateResume(result?.data)
+        swal("Success!", "Resume updated successfully!", "success");
+        handleClose()
+      }catch(err){
+        console.log(err);        
+      }
+    }
 
   return (
     <>
@@ -77,37 +108,42 @@ function Edit({resumeId}) {
             {/* education details */}
             <h3>Education Details</h3>
             <div className="d-flex row p-3">
-            <TextField id="standard-basic-couse" label="Course Name" variant="standard" />
-            <TextField id="standard-basic-college" label="College Name" variant="standard" />
-            <TextField id="standard-basic-university" label="University" variant="standard" />
-            <TextField id="standard-basic-year" label="Year of Passout" variant="standard" />
+              <TextField id="standard-basic-couse" label="Course Name" variant="standard" onChange={e=>setUserInput({...userInput,education:{...userInput.education,course:e.target.value}})} value={userInput?.education?.course}/>
+              <TextField id="standard-basic-college" label="College Name" variant="standard" onChange={e=>setUserInput({...userInput,education:{...userInput.education,college:e.target.value}})} value={userInput?.education?.college}/>
+              <TextField id="standard-basic-university" label="University" variant="standard" onChange={e=>setUserInput({...userInput,education:{...userInput.education,university:e.target.value}})} value={userInput?.education?.university}/>
+              <TextField id="standard-basic-year" label="Year of Passout" variant="standard" onChange={e=>setUserInput({...userInput,education:{...userInput.education,year:e.target.value}})} value={userInput?.education?.year}/>
             </div>
             {/* professional details */}
             <h3>Professional Details</h3>
             <div className="d-flex row p-3">
-            <TextField id="standard-basic-role" label="Job or Internship" variant="standard" />
-            <TextField id="standard-basic-company" label="Company Name" variant="standard" />
-            <TextField id="standard-basic-clocation" label="Company Location" variant="standard" />
-            <TextField id="standard-basic-duration" label="Duration" variant="standard" />
+              <TextField id="standard-basic-role" label="Job or Internship" variant="standard" onChange={e=>setUserInput({...userInput,experience:{...userInput.experience,jobRole:e.target.value}})} value={userInput?.experience?.jobRole}/>
+              <TextField id="standard-basic-company" label="Company Name" variant="standard" onChange={e=>setUserInput({...userInput,experience:{...userInput.experience,company:e.target.value}})} value={userInput?.experience?.company}/>
+              <TextField id="standard-basic-clocation" label="Company Location" variant="standard" onChange={e=>setUserInput({...userInput,experience:{...userInput.experience,jobLocation:e.target.value}})} value={userInput?.experience?.jobLocation}/>
+              <TextField id="standard-basic-duration" label="Duration" variant="standard" onChange={e=>setUserInput({...userInput,experience:{...userInput.experience,duration:e.target.value}})} value={userInput?.experience?.duration}/>
             </div>
             {/* skills */}
             <h3>Skills</h3>
-            <div className="d-flex align-items-center justify-content-between p-3">
-            <TextField sx={{width:'400px'}} id="standard-basic-skill" label="Add Skills" variant="standard" />
-            <Button variant="text">ADD</Button>
-            </div>
-            <h5>Added Skils :</h5>
-            <div className="d-flex flex-wrap  justify-content-between my-3">
+              <div className="d-flex align-items-center justify-content-between p-3">
+              <TextField onChange={e=>setUserSkill(e.target.value)} sx={{width:'400px'}} id="standard-basic-skill" label="Add Skills" variant="standard" value={userSkill} />
+              <Button onClick={addSkill} variant="text">ADD</Button>
+              </div>
+              <h6>Selected Skills</h6>
                 {/* span must duplicate according to the user added skill */}
-                <span className='btn btn-outline-primary d-flex align-items-center justify-content-center'>REACT <button className="text-light btn ">X</button> </span>
-            </div>
+               <div className='d-flex my-4 flex-wrap'>
+                 {
+                  userInput?.skills?.length>0 &&
+                    userInput?.skills?.map(item=>(
+                       <span key={item} className='btn btn-outline-primary d-flex align-items-center justify-content-center m-2'>{item} <button onClick={()=>removeSkill(item)} className="text-light btn ">X</button> </span>
+                    ))
+                 }
+               </div>
             {/* summary */}
             <h3>Professional Summary</h3>
             <div className="d-flex row p-3">
-            <TextField id="standard-basic-summary" label="Write a short summary of yourself" multiline rows={4} variant="standard" />
+              <TextField id="standard-basic-summary" label="Write a short summary of yourself" multiline rows={4} variant="standard" onChange={e=>setUserInput({...userInput,summary:e.target.value})} value={userInput?.summary}/>
             </div>
           </Typography>
-          <Button>Update</Button>
+          <Button onClick={handleResumeUpdate}>Update</Button>
         </Box>
       </Modal>
     </>
