@@ -23,7 +23,7 @@ const style = {
 };
 
 
-function Edit({resumeId,setUpdateResume}) {
+function Edit({resumeId,setUpdateUserInput}) {
 
     const [userSkill,setUserSkill] = React.useState("")
     const [userInput,setUserInput] = React.useState({})
@@ -67,7 +67,7 @@ function Edit({resumeId,setUpdateResume}) {
     const handleResumeUpdate = async ()=>{
       try{
         const result = await editResumeAPI(userInput?.id,userInput)
-        setUpdateResume(result?.data)
+        setUpdateUserInput(result?.data)
         swal("Success!", "Resume updated successfully!", "success");
         handleClose()
       }catch(err){

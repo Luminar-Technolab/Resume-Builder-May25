@@ -5,7 +5,7 @@ import Preview from '../components/Preview'
 
 function UserForm() {
   //state for storing user input data
-    const [userInput,setUserInput] = React.useState({
+    const [userInput,setUserInput] = useState({
       personelData:{
         name:'',
         jobTitle:'',

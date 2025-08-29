@@ -14,12 +14,8 @@ import { addDownloadHistoryAPI } from '../services/allAPI';
 
 function Preview({userInput,setUserInput,finish,resumeId}) {
   
-  const [updateResume,setUpdateResume] = useState({})
   const [downloadStatus,setDownloadStatus] =useState(false)
 
-  useEffect(()=>{
-    updateResume!={} && setUserInput(updateResume)
-  },[updateResume])
   
   const downloadCV = async()=>{
     //get element for taking screenshot
@@ -61,7 +57,7 @@ function Preview({userInput,setUserInput,finish,resumeId}) {
                   {/* download */}
                   <button onClick={downloadCV} className="btn fs-3 text-primary" ><FaFileDownload /></button>
                   {/* edit */}
-                  <div>  <Edit setUpdateResume={setUpdateResume} resumeId={resumeId}/> </div>
+                  <div>  <Edit setUpdateUserInput={setUserInput} resumeId={resumeId}/> </div>
                   {
                     downloadStatus &&
                     <>
